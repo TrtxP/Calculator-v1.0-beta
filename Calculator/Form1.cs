@@ -68,7 +68,9 @@ namespace Calculator
         private void Sqrt()
         {
             if (double.TryParse(txtDisplay.Text, out num) && num != 0)
+            {
                 txtDisplay.Text = (Math.Sqrt(num)).ToString();
+            }
         }
 
         private void ToPlusOrMinusNum()
@@ -88,7 +90,7 @@ namespace Calculator
             {
                 if (num == 0)
                 {
-                    txtDisplay.Text = "Cannot divide by zero";
+                    txtDisplay.Text = "";
                     return;
                 }
 
