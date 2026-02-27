@@ -12,9 +12,6 @@ namespace Calculator
             InitializeComponent();
         }
 
-        bool isClearing = false;
-        bool suppressError = false;
-
         double num;
         double result;
 
@@ -66,140 +63,6 @@ namespace Calculator
                         break;
                 }
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Text += "1";
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Text += "2";
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Text += "3";
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Text += "4";
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Text += "5";
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Text += "6";
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Text += "7";
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Text += "8";
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Text += "9";
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Text += "0";
-        }
-
-        private void button12_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Text += ".";
-        }
-
-        private void button13_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Text += "+";
-        }
-
-        private void button14_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Text += "-";
-        }
-
-        private void button15_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Text += ":";
-        }
-
-        private void button16_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Text += "*";
-        }
-
-        private void button17_Click(object sender, EventArgs e)
-        {
-            if (double.TryParse(txtDisplay.Text, out num) && num != 0)
-                txtDisplay.Text = (Math.Sqrt(num)).ToString();
-        }
-
-        private void button20_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Text += "%";
-        }
-
-        private void button22_Click(object sender, EventArgs e)
-        {
-            if (double.TryParse(txtDisplay.Text, out num))
-            {
-                num = -num;
-                txtDisplay.Text = num.ToString();
-            }
-        }
-
-        private void button18_Click(object sender, EventArgs e)
-        {
-            if (double.TryParse(txtDisplay.Text, out num) && num != 0)
-            {
-                txtDisplay.Text = (1 / num).ToString();
-            }
-            else
-            {
-                txtDisplay.Text = "Cannot divided by zero";
-            }
-        }
-
-        private void button11_Click(object sender, EventArgs e)
-        {
-            CalculateExpression(txtDisplay.Text);
-        }
-
-        private void button21_Click(object sender, EventArgs e)
-        {
-            if (txtDisplay.Text == result.ToString())
-            {
-                return;
-            }
-
-            if (txtDisplay.Text.Length > 0)
-            {
-                txtDisplay.Text = txtDisplay.Text.Substring(0, txtDisplay.Text.Length - 1);
-                if (txtDisplay.Text.Length == 0)
-                {
-                    txtDisplay.Clear();
-                }
-            }
-        }
-
-        private void button19_Click(object sender, EventArgs e)
-        {
-            txtDisplay.Clear();
         }
 
         private void Sqrt()
@@ -275,34 +138,17 @@ namespace Calculator
 
         private void CalculateExpression(string expression)
         {
-            //try
-            //{
-            //    if (Regex.IsMatch(expression, @"/\s*0+(\.0+)?\s*(?!\d)"))
-            //    {
-            //        txtDisplay.Text = "Cannot divide by zero";
-            //        return;
-            //    }
-            //    var result = new DataTable().Compute(expression, null);
-            //    txtDisplay.Text = result.ToString();
-            //}
-            //catch (Exception)
-            //{
-            //    txtDisplay.Text = "Error";
-            //}
             var result = new DataTable().Compute(expression, null);
             txtDisplay.Text = result.ToString();
         }
 
         private void txtDisplay_TextChanged(object sender, EventArgs e)
         {
-            if (isClearing || suppressError) return;
 
             if (Regex.IsMatch(txtDisplay.Text, @"\p{L}"))
             {
-                suppressError = true;
                 txtDisplay.Text = "";
-                MessageBox.Show("Enter the correct number value.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                suppressError = false;
+                return;
             }
         }
     }
